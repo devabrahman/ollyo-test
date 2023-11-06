@@ -1,5 +1,6 @@
-import Header from "../components/header/Header";
-import Gallery from "../components/Gallery/Gallery";
+import Header from "../components/Header";
+import Gallery from "../components/Gallery";
+import "../App.css";
 
 const Main = () => {
   return (

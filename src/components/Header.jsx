@@ -1,4 +1,3 @@
-import "./Header.css";
 import logoThumb from "/public/assets/images/logo.png";
 const Header = () => {
   return (

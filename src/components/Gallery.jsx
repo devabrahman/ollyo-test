@@ -18,7 +18,6 @@ const Gallery = () => {
   const [selectItems, setSelectItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isCheckAllItem, setIsCheckAllItem] = useState(false);
-
   const dragPerson = useRef(0);
   const draggedOverPerson = useRef(0);
 
