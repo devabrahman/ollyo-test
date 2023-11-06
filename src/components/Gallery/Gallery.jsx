@@ -1,4 +1,5 @@
-import React, { useState, memo, useEffect } from "react";
+import { useState, memo, useEffect, useRef } from "react";
+// eslint-disable-next-line react-refresh/only-export-components
 const Gallery = () => {
   const [imageArray, setImageArray] = useState([
     { id: " imgList01", url: "/assets/images/image-1.webp" },
@@ -17,6 +18,17 @@ const Gallery = () => {
   const [selectItems, setSelectItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isCheckAllItem, setIsCheckAllItem] = useState(false);
+
+  const dragPerson = useRef(0);
+  const draggedOverPerson = useRef(0);
+
+  function handleSort() {
+    const galleryItem = [...imageArray];
+    const temp = galleryItem[dragPerson.current];
+    const removedElement = galleryItem.splice(galleryItem.indexOf(temp), 1);
+    galleryItem.splice(draggedOverPerson.current, 0, removedElement[0]);
+    setImageArray(galleryItem);
+  }
 
   const pushRemoveItem = (id) => {
     if (!selectItems.includes(id)) {
@@ -53,6 +65,7 @@ const Gallery = () => {
       (imginfo) => !selectItems.includes(imginfo.id)
     );
     setImageArray(remainImg);
+    setSelectItems([]);
     setIsLoading(false);
   };
 
@@ -85,7 +98,15 @@ const Gallery = () => {
             const id = item.id;
             allGalleryId.push(id);
             return (
-              <li key={i} className="gallery-item">
+              <li
+                key={i}
+                className="gallery-item"
+                draggable
+                onDragStart={() => (dragPerson.current = i)}
+                onDragEnter={() => (draggedOverPerson.current = i)}
+                onDragEnd={handleSort}
+                onDragOver={(e) => e.preventDefault()}
+              >
                 <label htmlFor={id}>
                   <span
                     className={`overlay ${
